@@ -100,8 +100,3 @@ while trueFalse:
             display.scroll(mesaj(litereMesaj))
         display.clear()
         trueFalse = False
-
-
-
-
-https://docs.google.com/spreadsheets/d/1y4q7G4HYtdBKcnfp-D4rquPV0f_pz8T8Yrif4EkYXC8/edit#gid=0
