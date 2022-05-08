@@ -1,0 +1,107 @@
+# Add your Python code here. E.g.
+from microbit import *
+import os
+import music
+
+trueFalse = True
+listaLitere = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','.',',','-','!',' ']
+litereMesaj = []
+indexLitera = 0
+def alegereLitera(): #functia pt alegerea fiecarei litere din mesaj
+    i = 0
+    display.show(listaLitere[i])
+    sleep(1000)
+    while pin_logo.is_touched() == False:
+        if button_a.was_pressed():
+            if i < len(listaLitere) - 1:
+                i += 1
+                sleep(500)
+                display.show(listaLitere[i])
+            else:
+                i = 0
+                sleep(500)
+                display.show(listaLitere[i])
+        if button_b.was_pressed():
+            if i > 0:
+                i -= 1
+                sleep(1000)
+                display.show(listaLitere[i])
+            else:
+                i = len(listaLitere) - 1
+                sleep(500)
+                display.show(listaLitere[i])
+    litereMesaj.append(listaLitere[i])
+    display.clear()
+    sleep(500)
+
+def creareMesaj(): #functia care creaza intreg mesajul
+    while button_a.is_pressed() == False and button_b.is_pressed() == False:
+        alegereLitera()
+    display.show(Image.HAPPY)
+    sleep(3000)
+      
+def timer(): #functia cu care setezi numarul de minute pt timer
+    i = 0
+    display.show(i)
+    while pin_logo.is_touched() == False:
+        if button_a.was_pressed():
+            if i < 30:
+                i += 1
+                sleep(500)
+                display.show(i)
+            else:
+                i = 0
+                sleep(500)
+                display.show(i)
+        if button_b.was_pressed():
+            if i > 0:
+                i -= 1
+                sleep(1000)
+                display.show(i)
+            else:
+                i = 30
+                sleep(500)
+                display.show(i)
+    i *= 60000
+    x = running_time()
+    global tDeOprire 
+    tDeOprire = x + i
+    display.show(Image.HEART)
+    sleep(3000)
+    
+def mesaj(lista): #functie de convertire intre lista si string
+    text = ""
+    for x in lista:
+        text += x
+    return text
+        
+while trueFalse: 
+    if pin_logo.is_touched():
+        creareMesaj()
+        timer()
+        x = running_time()
+        while x < tDeOprire: #while pentru timpul de asteptare
+            display.show(Image.CLOCK12)
+            sleep(1000)
+            display.show(Image.CLOCK3)
+            sleep(1000)
+            display.show(Image.CLOCK6)
+            sleep(1000)
+            display.show(Image.CLOCK9)
+            sleep(1000)
+            x = running_time()
+            #while pt alarma si pt afisarea mesajului
+        while button_a.was_pressed() == False or button_b.was_pressed() == False:
+            for freq in range(880, 1760, 16):
+                music.pitch(freq, 6)
+            for freq in range(1760, 880, -16):
+                music.pitch(freq, 6)
+                
+            display.scroll(mesaj(litereMesaj))
+        display.clear()
+        trueFalse = False
+
+
+
+
+https://docs.google.com/spreadsheets/d/1y4q7G4HYtdBKcnfp-D4rquPV0f_pz8T8Yrif4EkYXC8/edit#gid=0
